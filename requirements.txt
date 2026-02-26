@@ -1,0 +1,22 @@
+Author: Marcelo Salvador
+
+Title: Build a Sentiment Classifier
+Purpose: Detect how positive or negative each tweet is using word scoring.
+
+Inputs:
+
+A dataset of tweets (text+metadata)
+A list of positive("happy") words
+A list of negative("angry") words
+
+Output 1: A CSV where each row is a representation of one tweet and includes:
+
+Number of retweets
+Number of replies
+Positive Score (count of positive words in the tweet)
+Negative Score (count of negative words in the tweet)
+Net Score = Positive Score - Negative Score
+
+Output 2:
+
+A scatterplot of NetScore(X-axix) vs Number of Retweets(Y-axis)

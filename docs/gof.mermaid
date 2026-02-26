@@ -1,0 +1,50 @@
+classDiagram
+    class SentimentStrategy {
+        <<interface>>
+        +score(text)
+    }
+
+    class LexiconSentimentStrategy {
+        -positive_words: set
+        -negative_words: set
+        +score(text)
+    }
+
+    class VaderSentimentStrategy {
+        +score(text)
+    }
+
+    class SentimentFacade {
+        -strategy: SentimentStrategy
+        -preprocessor: TextPreprocessor
+        -reader: CSVReader
+        -writer: CSVWriter
+        -plotter: Plotter
+        +run_analysis(input_file, output_file)
+    }
+
+    class TextPreprocessor {
+        +strip_punctuation(word)
+        +tokenize(text)
+    }
+
+    class CSVReader {
+        +read_rows(input_file)
+    }
+
+    class CSVWriter {
+        +write_results(output_file, rows)
+    }
+
+    class Plotter {
+        +produce_graph(output_file)
+    }
+
+    SentimentStrategy <|.. LexiconSentimentStrategy
+    SentimentStrategy <|.. VaderSentimentStrategy
+
+    SentimentFacade --> SentimentStrategy : uses
+    SentimentFacade --> TextPreprocessor : uses
+    SentimentFacade --> CSVReader : uses
+    SentimentFacade --> CSVWriter : uses
+    SentimentFacade --> Plotter : uses

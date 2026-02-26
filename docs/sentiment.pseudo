@@ -1,0 +1,115 @@
+//Algorithms: Sentiment Classifier for Tweets
+
+//Run time O(mn) - linear in the size of the input text
+//n = number of tweets
+//m = average number of words per tweet
+//The time complexity is efficient because each tweet and word is scanned once.
+
+Input
+	•	A file of tweets, where each row contains:
+	•	tweet text
+	•	number of retweets
+	•	number of replies
+	•	A list of positive words
+	•	A list of negative words
+	•	A list of punctuation characters
+
+Output
+	•	A CSV file containing, for each tweet:
+	•	Number of Retweets
+	•	Number of Replies
+	•	Positive Score
+	•	Negative Score
+	•	Net Score
+
+  Methods:
+    1. StripPunctuation
+    2. GetPositiveScore
+    3. GetNegativeScore
+    4. BuildSentimentCSV
+    5. ProduceGraph
+
+Algorithm 1: StripPunctuation
+
+Procedure StripPunctuation(word)
+// Remove every punctuation character from the word
+Input: A string word
+Output: The string word with all punctuation characters removed
+	1.	For each character p in the list of punctuation characters, do:
+	1.	Replace every occurrence of p in word with the empty string.
+	2.	Return word.
+
+
+Algorithm 2: GetPositiveScore
+
+Procedure GetPositiveScore(text)
+// Count each cleaned word that appears in the positive word list
+Input: A tweet string text
+Output: The number of positive words in text
+	1.	Set pos_count ← 0.
+	2.	Convert text to lowercase.
+	3.	Split text into words.
+	4.	For each word in the resulting list, do:
+	1.	Set clean_word ← StripPunctuation(word).
+	2.	If clean_word is in the positive word list, then:
+	1.	Set pos_count ← pos_count + 1.
+	5.	Return pos_count.
+
+Algorithm 3: GetNegativeScore
+
+Procedure GetNegativeScore(text)
+// Count each cleaned word that appears in the negative word list
+Input: A tweet string text
+Output: The number of negative words in text
+	1.	Set neg_count ← 0.
+	2.	Convert text to lowercase.
+	3.	Split text into words.
+	4.	For each word in the resulting list, do:
+	1.	Set clean_word ← StripPunctuation(word).
+	2.	If clean_word is in the negative word list, then:
+	1.	Set neg_count ← neg_count + 1.
+	5.	Return neg_count
+
+Algorithm 4: BuildSentimentCSV
+
+Procedure BuildSentimentCSV(input_file, output_file)
+// Read each tweet, compute sentiment scores, and write the results to a new CSV file
+Input:
+	•	input_file: CSV file containing tweet data
+	•	output_file: CSV file to store sentiment results
+
+Output: A new CSV file containing retweets, replies, positive score, negative score, and net score for each tweet
+	1.	Open input_file for reading.
+	2.	Open output_file for writing.
+	3.	Write the header row:
+	•	"Number of Retweets", "Number of Replies", "Positive Score", "Negative Score", "Net Score"
+	4.	Skip the first row of input_file (the header).
+	5.	For each remaining row in input_file, do:
+	1.	Let tweet_text be the first column.
+	2.	Let retweets be the second column.
+	3.	Let replies be the third column.
+	4.	Set pos ← GetPositiveScore(tweet_text).
+	5.	Set neg ← GetNegativeScore(tweet_text).
+	6.	Set net ← pos - neg.
+	7.	Write the row
+(retweets, replies, pos, neg, net)
+to output_file.
+	6.	Close both files.
+
+Algorithm 5: Produce Graph
+
+Procedure ProduceGraph(output_file)
+// Read the sentiment results and plot each tweet as a point on the scatterplot
+
+Input: The sentiment results CSV file
+Output: A scatterplot of Net Score versus Number of Retweets
+	1.	Read each row of output_file.
+	2.	For each row, extract:
+	1.	net score
+	2.	number of retweets
+	3.	Plot each row as a point:
+	•	x-coordinate = Net Score
+	•	y-coordinate = Number of Retweets
+	4.	Label the horizontal axis “Net Score”.
+	5.	Label the vertical axis “Number of Retweets”.
+	6.	Display the graph.

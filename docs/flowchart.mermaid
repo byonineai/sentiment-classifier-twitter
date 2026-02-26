@@ -1,0 +1,9 @@
+flowchart TD
+    A["Input CSV"] --> B["SentimentFacade.run_analysis()"]
+    B --> C["CSVReader"]
+    C --> D["TextPreprocessor"]
+    D --> E["SentimentStrategy.score()"]
+    E --> F["CSVWriter"]
+    F --> G["Output CSV"]
+    F --> H["Plotter"]
+    H --> I["Scatterplot: Net Score vs Retweets"]
